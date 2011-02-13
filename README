@@ -1,0 +1,37 @@
+NAME
+    Algorithm::ComplementNB - Complement Naive Bayes Classifier
+
+SYNOPSIS
+      use Algorithm::ComplementNB;
+
+      my $cnb= Algorithm::ComplementNB->new();
+  
+      $cnb->add_instance(
+          attributes => {a => 2, b => 3},
+          label => 'positive'
+      );
+  
+      $cnb->add_instance(
+          attributes => {c => 3, d => 1},
+          label => 'negative'
+      );
+  
+      $cnb->train();
+  
+      my $score = $cnb->predict(
+                      attributes => {a => 1, b => 1, d => 1, e =>1}
+                  );
+
+DESCRIPTION
+    This module implements a Complement Naive Bayes. Algorithm::ComplementNB
+    is a simple CNB, and Algorithm::TWCNB is a Transformed Weight-normalized
+    version of CNB.
+
+AUTHOR
+    TAGAMI Yukihiro <tagami.yukihiro@gmail.com>
+
+LICENSE
+    This library is distributed under the term of the MIT license.
+
+    <http://opensource.org/licenses/mit-license.php>
+
