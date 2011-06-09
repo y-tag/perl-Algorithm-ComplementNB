@@ -60,6 +60,7 @@ sub train {
     my $dnum = $self->{dnum};
 
     my $cdata = {};
+    my $weight = $self->{weight};
 
     for (my $j = 0; $j < $dnum; $j++) {
         my $attributes = $self->{fdata}[$j];
@@ -75,24 +76,22 @@ sub train {
         }
     }
 
-    my $ctheta = {};
-    my $weight = $self->{weight};
 
     foreach my $label (keys %{$cdata->{label}}) {
         my $csum = 0;
         foreach my $f (keys %{$cdata->{all}}) {
-            $ctheta->{$label}{$f} = $cdata->{all}{$f};
+            $weight->{$label}{$f} = $cdata->{all}{$f};
             if (defined($cdata->{label}{$label}{$f})) {
-                $ctheta->{$label}{$f} -= $cdata->{label}{$label}{$f};
+                $weight->{$label}{$f} -= $cdata->{label}{$label}{$f};
             }
-            $ctheta->{$label}{$f} += $alpha;
-            $csum += $ctheta->{$label}{$f};
+            $weight->{$label}{$f} += $alpha;
+            $csum += $weight->{$label}{$f};
         }
 
         my $wsum = 0;
-        foreach my $f (keys %{$ctheta->{$label}}) {
-            $ctheta->{$label}{$f} /= $csum;
-            $weight->{$label}{$f} = log($ctheta->{$label}{$f});
+        foreach my $f (keys %{$weight->{$label}}) {
+            $weight->{$label}{$f} /= $csum;
+            $weight->{$label}{$f} = log($weight->{$label}{$f});
             $wsum += $weight->{$label}{$f};
         }
 
